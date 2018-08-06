@@ -1,4 +1,6 @@
 @import 'config';
+@import 'menu';
+
 * {
   box-sizing: border-box;
 }
@@ -68,5 +70,6 @@ main {
         margin-top: 20vh;
     }
 }
+
 
 }
