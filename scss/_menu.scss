@@ -11,7 +11,7 @@
     width: 28px;
     height: 3px;
     margin: 0 0 5px 0;
-    background: #ffffff;
+    background: set-text-color($primary-color);
     @include easeOut;
   }
 
@@ -117,7 +117,7 @@
     text-transform: uppercase;
     padding: 1rem 0;
     font-weight: 300;
-    color: #ffffff;
+    color:set-text-color($primary-color);
     text-decoration: none;
     @include easeOut;
 
@@ -130,6 +130,6 @@
 //delaying each nav item to slide by 0.1s
 @for $x from 1 through 4 {
   .nav-item:nth-child(#{$x}) {
-    transition-delay: $x * 0.25s;
+    transition-delay: $x * 0.15s;
   }
 }
