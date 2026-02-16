@@ -1,8 +1,9 @@
-$primary-color: #444;
-$secondary-color: #eece1a;
-$show-home-image: true;
-$home-image: url(../img/background.jpg);
-$background-opacity: 0.9;
+$primary-color: #0e0d16;           // Deep navy (matches grain gradient background)
+$secondary-color: #a49c74;          // Warm tan/beige (matches grain gradient)
+$tertiary-color: #568b50;           // Olive green (matches grain gradient)
+$accent-color: #3e6274;             // Blue-green accent (matches grain gradient)
+$show-home-image: false;            // Disable static background (using Grain Gradient shader)
+$background-opacity: 0.85;          // Slightly more transparent for shader visibility
 
 @mixin easeOut {
   transition: all 0.5s ease-out;

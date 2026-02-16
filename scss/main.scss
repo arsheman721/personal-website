@@ -8,12 +8,38 @@
 
 body {
   @include background;
-  background: $primary-color;
-  color:set-text-color($primary-color);
+  background: transparent;
+  color: set-text-color($primary-color);
   height: 100;
   margin: 0;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  line-height: 1.5;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+
+  // Static gradient fallback for when shader doesn't load
+  &.static-bg-fallback {
+    background: linear-gradient(135deg, #2d1810 0%, #1a1a1a 50%, #1d2310 100%);
+    background-attachment: fixed;
+  }
+}
+
+// Smooth scrolling
+html {
+  scroll-behavior: smooth;
+
+  // Respect user's motion preferences
+  @media (prefers-reduced-motion: reduce) {
+    scroll-behavior: auto;
+    
+    // Disable all animations for users who prefer reduced motion
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 }
 
 //Headings
@@ -21,22 +47,46 @@ h1,
 h2,
 h3 {
   margin: 0;
-  font-weight: 400;
+  font-weight: 600;
+  letter-spacing: -0.02em;
 
   &.lg-heading {
     font-size: 6rem;
+    line-height: 1.1;
+    font-weight: 700;
+    padding: 0.8rem 1.5rem;
+    background: rgba(lighten($primary-color, 5), 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    border-left: 4px solid $secondary-color;
+    display: inline-block;
+    color: #fff;
+    margin-bottom: 20px;
+    
+    .text-secondary {
+      color: #fff;
+    }
   }
 
   &.sm-heading {
     margin-bottom: 2rem;
-    padding: 0.2rem, 1rem;
-    background: rgba(lighten($primary-color, 2), 0.5);
+    padding: 0.8rem 1.5rem;
+    background: rgba(lighten($primary-color, 5), 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    border-left: 4px solid $secondary-color;
+    display: inline-block;
   }
 }
 
 a {
   color: #fff;
   text-decoration: none;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: $secondary-color;
+  }
 }
 
 header {
@@ -48,29 +98,67 @@ header {
 .text-secondary {
   color: $secondary-color;
 }
+
 main {
   padding: 4rem;
-  //height: 100%;
   min-height: calc(100vh - 60px);
 
   .icons {
     margin-top: 1rem;
+    display: flex;
+    gap: 1rem;
 
     a {
-      padding: 0.4rem;
+      padding: 0.8rem;
+      background: rgba(lighten($primary-color, 10), 0.6);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      border: 1px solid rgba($accent-color, 0.1);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
 
       &:hover {
         color: $secondary-color;
-        @include easeOut();
+        background: rgba($secondary-color, 0.15);
+        border-color: $secondary-color;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 16px rgba($secondary-color, 0.2);
       }
     }
   }
 
   &#home {
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    
     h1 {
       margin-top: 20vh;
+      animation: fadeInUp 0.8s ease-out;
     }
+
+    h2 {
+      animation: fadeInUp 0.8s ease-out 0.2s backwards;
+    }
+
+    .icons {
+      animation: fadeInUp 0.8s ease-out 0.4s backwards;
+    }
+  }
+}
+
+// Fade in up animation
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -87,12 +175,18 @@ main {
     grid-area: bioimage;
     margin: auto;
     border-radius: 50%;
-    border: $secondary-color 3px solid;
+    border: $secondary-color 4px solid;
+    box-shadow: 0 8px 32px rgba($secondary-color, 0.3);
   }
 
   .bio {
     grid-area: bio;
     font-size: 1.25rem;
+    background: rgba(lighten($primary-color, 5), 0.6);
+    backdrop-filter: blur(10px);
+    padding: 1.5rem;
+    border-radius: 16px;
+    border: 1px solid rgba($accent-color, 0.1);
   }
 
   .job-1 {
@@ -108,27 +202,69 @@ main {
   }
 
   .job {
-    background: lighten($primary-color, 5);
-    padding: 0.5rem;
-    border-bottom: $secondary-color 5px solid;
+    background: rgba(lighten($primary-color, 5), 0.6);
+    backdrop-filter: blur(10px);
+    padding: 1.5rem;
+    border-radius: 16px;
+    border: 1px solid rgba($accent-color, 0.1);
+    border-bottom: $secondary-color 4px solid;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 24px rgba($secondary-color, 0.2);
+      border-bottom-width: 6px;
+    }
+
+    h3 {
+      color: $secondary-color;
+      margin-bottom: 0.5rem;
+    }
+
+    h6 {
+      color: $tertiary-color;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
   }
 }
 
 //Work/projects
 .projects {
   display: grid;
-  grid-gap: 1rem;
+  grid-gap: 2rem;
   grid-template-columns: repeat(3, 1fr);
+
+  .item {
+    background: rgba(lighten($primary-color, 5), 0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba($accent-color, 0.1);
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 32px rgba($secondary-color, 0.3);
+    }
+  }
 
   img {
     width: 100%;
-    border: 3px #fff solid;
+    border: 0;
+    display: block;
 
     &:hover {
-      opacity: 0.5;
-      border-color: $secondary-color;
+      opacity: 0.85;
       @include easeOut;
     }
+  }
+
+  a.btn-light,
+  a.btn-dark {
+    display: block;
+    text-align: center;
+    margin: 0;
   }
 }
 
@@ -138,21 +274,34 @@ main {
   flex-wrap: wrap;
   justify-content: space-evenly;
   align-items: center;
-  margin-top: 1rem;
+  margin-top: 2rem;
+  gap: 2rem;
 
   div {
     font-size: 2rem;
-    border: 3px #fff solid;
-    padding: 1.5rem 2.5rem;
-    margin-bottom: 3rem;
-    @include easeOut;
+    background: rgba(lighten($primary-color, 5), 0.6);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba($accent-color, 0.2);
+    border-radius: 16px;
+    padding: 2rem 3rem;
+    transition: all 0.3s ease;
+
+    a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
 
     &:hover {
-      padding: 0.5rem 1.5rem;
-      background: $secondary-color;
-      color: set-text-color($secondary-color);
+      padding: 2.2rem 3.2rem;
+      background: rgba($secondary-color, 0.15);
+      border-color: $secondary-color;
+      transform: translateY(-5px);
+      box-shadow: 0 12px 24px rgba($secondary-color, 0.3);
+      
       span {
-        color: set-text-color($secondary-color);
+        color: $secondary-color;
       }
     }
   }
@@ -161,33 +310,43 @@ main {
 // Button Styles
 .btn {
   display: block;
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1.5rem;
   border: 0;
   margin-bottom: 0.3rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  
   &:hover {
     background: $secondary-color;
-    color: set-text-color($secondary-color);
+    color: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba($secondary-color, 0.3);
   }
 }
 
 .btn-dark {
   @extend .btn;
-  background: darken($primary-color, 50);
+  background: rgba(darken($primary-color, 5), 0.8);
   color: #fff;
+  border: 1px solid rgba($accent-color, 0.1);
 }
 
 .btn-light {
   @extend .btn;
-  background: lighten($primary-color, 50);
-  color: #333;
+  background: rgba(lighten($primary-color, 20), 0.8);
+  color: #fff;
+  border: 1px solid rgba($accent-color, 0.2);
 }
 
 #main-footer {
   text-align: center;
   padding: 1rem;
-  background: darken($primary-color, 10);
+  background: rgba(darken($primary-color, 5), 0.9);
+  backdrop-filter: blur(10px);
   color: set-text-color($primary-color);
   height: 60px;
+  border-top: 1px solid rgba($accent-color, 0.1);
 }
 
 @import 'mobile';

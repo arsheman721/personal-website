@@ -5,14 +5,32 @@
   right: 35px;
   top: 35px;
   cursor: pointer;
+  padding: 12px;
+  background: rgba(lighten($primary-color, 5), 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  border: 2px solid rgba($secondary-color, 0.6);
+  box-shadow: 0 4px 12px rgba(#000, 0.3);
   @include easeOut;
 
+  &:hover {
+    background: rgba(lighten($primary-color, 8), 0.9);
+    border-color: $secondary-color;
+    transform: scale(1.05);
+  }
+
   .btn-line {
-    width: 28px;
-    height: 3px;
-    margin: 0 0 5px 0;
-    background: set-text-color($primary-color);
+    width: 32px;
+    height: 4px;
+    margin: 0 0 6px 0;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 2px 4px rgba(#000, 0.3);
     @include easeOut;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 
   // Rotate Into X With Menu Lines
@@ -22,7 +40,7 @@
     .btn-line {
       // Line 1 - Rotate
       &:nth-child(1) {
-        transform: rotate(45deg) translate(5px, 5px);
+        transform: rotate(45deg) translate(6px, 6px);
       }
 
       // Line 2 - Hide
@@ -32,7 +50,7 @@
 
       // Line 3 - Rotate
       &:nth-child(3) {
-        transform: rotate(-45deg) translate(7px, -6px);
+        transform: rotate(-45deg) translate(6px, -6px);
       }
     }
   }
@@ -43,11 +61,13 @@
   position: fixed;
   top: 0;
   width: 100%;
-  opacity: 0.98;
+  opacity: 0;
   visibility: hidden;
+  transition: all 0.5s ease-out;
 
   &.show {
     visibility: visible;
+    opacity: 1;
   }
 
   &-branding,
@@ -65,10 +85,12 @@
   &-nav {
     margin: 0;
     padding: 0;
-    background: darken($primary-color, 5);
+    background: rgba(darken($primary-color, 5), 0.95);
+    backdrop-filter: blur(20px);
     list-style: none;
     transform: translate3d(0, -100%, 0);
     @include easeOut;
+    border-right: 1px solid rgba($secondary-color, 0.2);
 
     &.show {
       //slide from the top
@@ -78,12 +100,13 @@
 
   //Branding Side
   &-branding {
-    background: $primary-color;
+    background: rgba($primary-color, 0.95);
+    backdrop-filter: blur(20px);
     transform: translate3d(0, 100%, 0);
     @include easeOut;
 
     &.show {
-      //slide from the bottem
+      //slide from the bottom
       transform: translate3d(0, 0, 0);
     }
 
@@ -91,8 +114,11 @@
       width: 250px;
       height: 333px;
       background: url("../img/me.jpg");
+      background-size: cover;
+      background-position: center;
       border-radius: 50%;
-      border: solid 3px $secondary-color;
+      border: solid 4px $secondary-color;
+      box-shadow: 0 8px 32px rgba($secondary-color, 0.4);
     }
   }
 
@@ -116,13 +142,28 @@
     font-size: 30px;
     text-transform: uppercase;
     padding: 1rem 0;
-    font-weight: 300;
-    color:set-text-color($primary-color);
+    font-weight: 600;
+    color: set-text-color($primary-color);
     text-decoration: none;
     @include easeOut;
 
     &:hover {
       color: $secondary-color;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: $secondary-color;
+      transition: width 0.3s ease;
+    }
+
+    &:hover::after {
+      width: 100%;
     }
   }
 }
