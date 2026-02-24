@@ -1,9 +1,5 @@
 // Wait for Swup to be available and initialize
 function initSwup() {
-  // #region agent log
-  fetch('http://127.0.0.1:7498/ingest/77c77376-6489-4a6e-a680-7c01fac519e2',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'16d5bd'},body:JSON.stringify({sessionId:'16d5bd',location:'swup-init.js:initSwup',message:'initSwup called',data:{swupDefined:typeof Swup!=='undefined',url:location.href,readyState:document.readyState},timestamp:Date.now(),hypothesisId:'H-B'})}).catch(()=>{});
-  // #endregion
-
   if (typeof Swup === 'undefined') {
     console.error('Swup not loaded yet');
     return;
@@ -15,11 +11,6 @@ function initSwup() {
     animationSelector: '[class*="transition-"]',
     linkSelector: 'a[href*=".html"]:not([target]):not([data-no-swup])',
   });
-
-  // #region agent log
-  const grainEl = document.getElementById('grain-root');
-  fetch('http://127.0.0.1:7498/ingest/77c77376-6489-4a6e-a680-7c01fac519e2',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'16d5bd'},body:JSON.stringify({sessionId:'16d5bd',location:'swup-init.js:afterSwupNew',message:'Swup instance created',data:{swupContainerFound:!!document.getElementById('swup'),grainRootFound:!!grainEl,grainRootChildCount:grainEl?grainEl.childElementCount:null},timestamp:Date.now(),hypothesisId:'H-A'})}).catch(()=>{});
-  // #endregion
 
   // Keep track of menu button state
   let menuBtn;
@@ -69,18 +60,8 @@ function initSwup() {
     });
   }
 
-  swup.hooks.on('visit:start', (visit) => {
-    // #region agent log
-    fetch('http://127.0.0.1:7498/ingest/77c77376-6489-4a6e-a680-7c01fac519e2',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'16d5bd'},body:JSON.stringify({sessionId:'16d5bd',location:'swup-init.js:visit:start',message:'Swup visit started',data:{to:visit&&visit.to&&visit.to.url},timestamp:Date.now(),hypothesisId:'H-B'})}).catch(()=>{});
-    // #endregion
-  });
-
   // Reinitialize menu functionality after page transition
   swup.hooks.on('content:replace', () => {
-    // #region agent log
-    const grainAfter = document.getElementById('grain-root');
-    fetch('http://127.0.0.1:7498/ingest/77c77376-6489-4a6e-a680-7c01fac519e2',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'16d5bd'},body:JSON.stringify({sessionId:'16d5bd',location:'swup-init.js:content:replace',message:'content replaced',data:{grainRootFound:!!grainAfter,grainRootChildCount:grainAfter?grainAfter.childElementCount:null,url:location.href},timestamp:Date.now(),hypothesisId:'H-C'})}).catch(()=>{});
-    // #endregion
     initializeMenu();
     updateActiveNav();
   });
