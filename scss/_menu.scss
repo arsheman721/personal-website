@@ -1,135 +1,158 @@
-// Menu Button
-.menu-btn {
-  position: absolute;
-  z-index: 3;
-  right: 35px;
-  top: 35px;
-  cursor: pointer;
+// Centered Floating Pill Navbar
+.navbar {
+  display: inline-flex;
+  align-items: center;
+  background: rgba($primary-color, 0.9);
+  border: 1px solid rgba(#fff, 0.12);
+  border-radius: 999px;
+  padding: 5px;
+  gap: 2px;
+  backdrop-filter: blur(12px);
+  @include easeOut;
+}
+
+// Monogram Circle (left)
+.nav-monogram {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(#fff, 0.15);
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 600;
+  color: $secondary-color;
+  text-decoration: none;
+  letter-spacing: 1px;
   @include easeOut;
 
+  &:hover {
+    background: rgba($secondary-color, 0.1);
+    border-color: $secondary-color;
+  }
+}
+
+// Desktop Nav Links
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-item {
+  margin: 0;
+}
+
+.nav-link {
+  display: block;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: rgba(#fff, 0.7);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  @include easeOut;
+
+  &:hover {
+    background: rgba(#fff, 0.06);
+    color: #fff;
+  }
+}
+
+.nav-item.current .nav-link {
+  background: rgba($secondary-color, 0.15);
+  color: $secondary-color;
+}
+
+// Hamburger Button (mobile only)
+.menu-btn {
+  display: none;
+  position: absolute;
+  right: 2rem;
+  z-index: 101;
+  cursor: pointer;
+  flex-direction: column;
+  gap: 4px;
+
   .btn-line {
-    width: 28px;
-    height: 3px;
-    margin: 0 0 5px 0;
-    background: set-text-color($primary-color);
+    width: 24px;
+    height: 2px;
+    background: #fff;
     @include easeOut;
   }
 
-  // Rotate Into X With Menu Lines
-  &.close {
-    transform: rotate(180deg);
+  &.open {
+    .btn-line:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
 
-    .btn-line {
-      // Line 1 - Rotate
-      &:nth-child(1) {
-        transform: rotate(45deg) translate(5px, 5px);
-      }
+    .btn-line:nth-child(2) {
+      opacity: 0;
+    }
 
-      // Line 2 - Hide
-      &:nth-child(2) {
-        opacity: 0;
-      }
-
-      // Line 3 - Rotate
-      &:nth-child(3) {
-        transform: rotate(-45deg) translate(7px, -6px);
-      }
+    .btn-line:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
     }
   }
 }
 
-//menu overlay
-.menu {
+// Mobile Dropdown Menu
+.mobile-menu {
   position: fixed;
-  top: 0;
-  width: 100%;
-  opacity: 0.98;
-  visibility: hidden;
+  top: 5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 400px;
+  background: rgba($primary-color, 0.95);
+  border: 1px solid rgba(#fff, 0.12);
+  border-radius: 16px;
+  backdrop-filter: blur(12px);
+  z-index: 99;
+  max-height: 0;
+  overflow: hidden;
+  @include easeOut;
 
-  &.show {
-    visibility: visible;
-  }
-
-  &-branding,
-  &-nav {
-    display: flex;
-    flex-flow: column wrap;
-    align-items: center;
-    justify-content: center;
-    float: left;
-    width: 50%;
-    height: 100vh;
-    overflow: hidden;
-  }
-
-  &-nav {
-    margin: 0;
-    padding: 0;
-    background: darken($primary-color, 5);
-    list-style: none;
-    transform: translate3d(0, -100%, 0);
-    @include easeOut;
-
-    &.show {
-      //slide from the top
-      transform: translate3d(0, 0, 0);
-    }
-  }
-
-  //Branding Side
-  &-branding {
-    background: $primary-color;
-    transform: translate3d(0, 100%, 0);
-    @include easeOut;
-
-    &.show {
-      //slide from the bottem
-      transform: translate3d(0, 0, 0);
-    }
-
-    .portrait {
-      width: 250px;
-      height: 333px;
-      background: url("../img/me.jpg");
-      border-radius: 50%;
-      border: solid 3px $secondary-color;
-    }
-  }
-
-  .nav-item {
-    transform: translate3d(600px, 0, 0);
-    @include easeOut;
-
-    &.show {
-      // Slide in from right
-      transform: translate3d(0, 0, 0);
-    }
-
-    &.current > a {
-      color: $secondary-color;
-    }
-  }
-
-  .nav-link {
-    display: inline-block;
-    position: relative;
-    font-size: 30px;
-    text-transform: uppercase;
-    padding: 1rem 0;
-    font-weight: 300;
-    color:set-text-color($primary-color);
-    text-decoration: none;
-    @include easeOut;
-
-    &:hover {
-      color: $secondary-color;
-    }
+  &.open {
+    max-height: 100vh;
   }
 }
 
-//delaying each nav item to slide by 0.1s
-@for $x from 1 through 4 {
-  .nav-item:nth-child(#{$x}) {
-    transition-delay: $x * 0.15s;
+.mobile-nav-links {
+  list-style: none;
+  padding: 0.5rem;
+  margin: 0;
+}
+
+.mobile-nav-item {
+  margin: 0;
+}
+
+.mobile-nav-link {
+  display: block;
+  padding: 0.9rem 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: rgba(#fff, 0.8);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: 12px;
+  @include easeOut;
+
+  &:hover {
+    color: #fff;
+    background: rgba(#fff, 0.06);
   }
+}
+
+.mobile-nav-item.current .mobile-nav-link {
+  color: $secondary-color;
+  background: rgba($secondary-color, 0.15);
 }

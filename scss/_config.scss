@@ -1,6 +1,6 @@
-$primary-color: #444;
-$secondary-color: #eece1a;
-$show-home-image: true;
+$primary-color: #0e0d16;           // Dark background matching grain gradient
+$secondary-color: #a49c74;          // Warm tan from grain gradient
+$show-home-image: false;            // Disabled - using grain gradient shader
 $home-image: url(../img/background.jpg);
 $background-opacity: 0.9;
 
