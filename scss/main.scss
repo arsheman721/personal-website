@@ -6,6 +6,10 @@
   box-sizing: border-box;
 }
 
+html {
+  background: $primary-color; // Fallback so no white flash during transitions
+}
+
 body {
   @include background;
   background: transparent;  // Transparent to show grain gradient shader
@@ -14,6 +18,16 @@ body {
   margin: 0;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.5;
+}
+
+// Swup page transition - smooth fade on content swap
+.transition-fade {
+  transition: opacity 0.25s ease;
+  opacity: 1;
+}
+
+html.is-animating .transition-fade {
+  opacity: 0;
 }
 
 //Headings
