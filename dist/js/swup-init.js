@@ -9,7 +9,7 @@ function initSwup() {
   const swup = new Swup({
     containers: ['#swup'],
     animationSelector: '[class*="transition-"]',
-    linkSelector: 'a[href*=".html"]:not([target]):not([data-no-swup])',
+    linkSelector: 'a[href]:not([href^="http"]):not([href^="mailto"]):not([href^="#"]):not([href^="javascript"]):not([target]):not([data-no-swup])',
   });
 
   // Keep track of menu button state
@@ -49,14 +49,13 @@ function initSwup() {
 
   // Update the active nav item based on the current page URL
   function updateActiveNav() {
-    const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+    const currentPath = window.location.pathname.replace(/^\//, '').replace(/\/$/, '') || '/';
 
     document.querySelectorAll('.nav-item, .mobile-nav-item').forEach((item) => {
       const link = item.querySelector('a');
       if (!link) return;
-      const linkPage = link.getAttribute('href').split('/').pop();
-      const isActive = linkPage === currentPath || (currentPath === '' && linkPage === 'index.html');
-      item.classList.toggle('current', isActive);
+      const linkPath = link.getAttribute('href').replace(/^\//, '').replace(/\/$/, '') || '/';
+      item.classList.toggle('current', linkPath === currentPath);
     });
   }
 
