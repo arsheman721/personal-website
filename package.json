@@ -7,21 +7,23 @@
     "sass": "sass scss/:dist/css/ --watch",
     "sass:build": "sass scss/:dist/css/ --style=compressed",
     "build:bg": "vite build",
+    "build:clarity": "vite build --config vite.clarity.config.js",
     "dev:bg": "vite",
     "dev": "npm-run-all --parallel sass dev:bg",
-    "build": "npm-run-all sass:build build:bg"
+    "build": "npm-run-all sass:build build:bg build:clarity"
   },
   "author": "Ahmed Arshe",
   "license": "MIT",
   "dependencies": {
+    "@microsoft/clarity": "^1.0.2",
+    "@paper-design/shaders-react": "^0.0.71",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "@paper-design/shaders-react": "^0.0.71",
     "sass": "^1.70.0"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.2.0",
-    "vite": "^5.0.0",
-    "npm-run-all": "^4.1.5"
+    "npm-run-all": "^4.1.5",
+    "vite": "^5.0.0"
   }
 }
