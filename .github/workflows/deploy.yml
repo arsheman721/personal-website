@@ -1,5 +1,8 @@
 name: Build & Deploy to Namecheap
 
+permissions:
+  contents: read
+
 on:
   push:
     branches:
