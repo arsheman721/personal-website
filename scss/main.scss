@@ -64,7 +64,7 @@ header {
 }
 
 .text-secondary {
-  color: $secondary-color;
+  color: rgba(255, 255, 255, 1);
 }
 main {
   padding: 4rem;
@@ -88,10 +88,6 @@ main {
     overflow: hidden;
     h1 {
       margin-top: 20vh;
-
-      .text-secondary {
-        color: rgba(255, 255, 255, 1);
-      }
     }
   }
 }
